@@ -4,6 +4,8 @@ import BGImage from './images/backGround.jpg';
 export const GlobalStyle = createGlobalStyle`
   html {
     height: 100%;
+    overflow-x:hidden;
+    
   }
   body {
     background-image: url(${BGImage});
@@ -12,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0 20px;
     display: flex;
     justify-content: center;
+    overflow-x:hidden;
   }
   * {
     font-family: 'Catamaran', sans-serif;

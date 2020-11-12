@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import QuestionCard from "./components/QuestionCard";
-import { fetchQuestions, Difficulty, QuestionState } from "./API";
+import { fetchQuestion, Difficulty, QuestionState } from "./API";
 import { GlobalStyle, Wrapper } from "./App.styles";
 
 export type AnswerObject = {
@@ -18,13 +18,13 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  console.log(questions);
+  // console.log(question);
 
   const startQuiz = async () => {
     setLoading(true);
     setGameOver(false);
 
-    const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
+    const newQuestions = await fetchQuestion(TOTAL_QUESTIONS, Difficulty.EASY);
     setQuestions(newQuestions);
     setScore(0);
     setUserAnswers([]);
@@ -48,18 +48,18 @@ const App = () => {
   };
 
   const nextQuestion = () => {
-    const nextQuestion = number + 1;
-    if (nextQuestion === TOTAL_QUESTIONS) {
+    const nextQ = number + 1;
+    if (nextQ === TOTAL_QUESTIONS) {
       setGameOver(true);
     } else {
-      setNumber(nextQuestion);
+      setNumber(nextQ);
     }
   };
   return (
     <>
       <GlobalStyle />
       <Wrapper>
-        <h1 style={{ color: "white" }}>React Quiz By Gopal</h1>
+        <h1 style={{ color: "white" }}>Quiz App By Gopal</h1>
         {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
           <button className="start" onClick={startQuiz}>
             Start
@@ -75,12 +75,10 @@ const App = () => {
             answers={questions[number].answers}
             userAnswer={userAnswers ? userAnswers[number] : undefined}
             callback={checkAnswer}
-          />):null}
-        {!gameOver &&
-        !loading &&
-        userAnswers.length === +1 &&
-        number !== TOTAL_QUESTIONS - 1 ? (
-          <button className="next" onClick={nextQuestion}>
+          />
+        ) : null}
+       {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? (
+          <button className='next' onClick={nextQuestion}>
             Next Question
           </button>
         ) : null}
